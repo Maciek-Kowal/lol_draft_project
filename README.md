@@ -1,21 +1,21 @@
-# LoL Pro Draft Analyzer 🎮
+# LoL Pro Draft Analyzer
 
 Projekt Full-Stack / Portfolio. Zaawansowane narzędzie do analizy i symulacji draftów w League of Legends, oparte na danych z profesjonalnych rozgrywek.
 
-## 🚀 Jak to działa?
+##  Jak to działa?
 Projekt realizuje pełny proces przetwarzania danych (ETL):
 1. **Extract (Scrapery):** Skrypty Python pobierają historię tysięcy meczy z API Leaguepedii (LCK, LPL, LEC, ERL).
 2. **Transform & Load (SQL):** Dane są czyszczone i zapisywane w bazie MS SQL Server.
 3. **Backend (FastAPI):** Silnik analityczny oblicza "ważony Winrate" (gdzie mecze Tier 1 mają większą wagę niż Tier 2) i wystawia API.
 4. **Frontend (React):** Interfejs użytkownika pozwalający na symulację draftu "na żywo" z podpowiedziami AI.
 
-## 🛠 Technologie
+##  Technologie
 * **Backend:** Python, FastAPI, Pandas, NumPy, SQLAlchemy
 * **Frontend:** React, Styled Components, Axios
 * **Baza Danych:** Microsoft SQL Server
 * **Dane:** Leaguepedia API (Cargo Query)
 
-## 📦 Uruchomienie
+##  Uruchomienie
 
 ### Wymagania wstępne
 * Zainstalowany Python i Node.js

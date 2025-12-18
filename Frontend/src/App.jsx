@@ -5,7 +5,6 @@ import styled, { createGlobalStyle, keyframes } from "styled-components";
 import championRoles from "./championRoles.json"; 
 
 // --- STYLE ---
-// Zwykly reset CSS zeby ladnie wygladalo na ciemnym tle
 const GlobalStyle = createGlobalStyle`
   body, html {
     margin: 0; padding: 0; height: 100%; width: 100%;
@@ -19,7 +18,6 @@ const GlobalStyle = createGlobalStyle`
 
 const animacjaWjazdu = keyframes` from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } `;
 
-// Glowny div trzymajacy calosc
 const GlownyKontener = styled.div`
   width: 100%;
   min-height: 100vh;
@@ -31,14 +29,13 @@ const GlownyKontener = styled.div`
   padding: 20px;
 `;
 
-// Inputy i przyciski
 const Szukajka = styled.input` width: 100%; padding: 12px; background: #091428; border: 1px solid #444; color: white; margin-bottom: 10px; `;
 const PrzyciskFiltra = styled.button` padding: 10px 20px; margin-right: 5px; border-radius: 4px; border: none; cursor: pointer; background-color: ${props => props.aktywny ? "#1e90ff" : "#444"}; color: white; font-weight: bold; `;
 const BelkaFiltrow = styled.div` display: flex; gap: 8px; margin-bottom: 20px; justify-content: center; width: 100%; `;
 
-// Ekran Startowy (Setup)
+// Ekran Startowy
 const PudloStartowe = styled.div`
-  width: 100%; max-width: 600px;
+  width: 100%; max-width: 800px; 
   background: rgba(10, 20, 40, 0.95);
   border: 2px solid #c8aa6e;
   border-radius: 8px;
@@ -58,6 +55,31 @@ const PrzyciskStart = styled.button`
   &:hover { background: #c8aa6e; color: #010a13; }
 `;
 
+// NOWE KOMPONENTY DO WYKLUCZEŃ (ZAKŁADKI)
+const PanelWykluczen = styled.div` border: 1px solid #444; background: #050b14; padding: 15px; margin-top: 5px; border-radius: 4px; `;
+const KontenerZakladek = styled.div` display: flex; gap: 10px; margin-bottom: 10px; `;
+const PrzyciskZakladki = styled.button`
+  flex: 1; padding: 10px; border: 1px solid #444; cursor: pointer; font-weight: bold; text-transform: uppercase;
+  background: ${props => props.aktywny ? (props.strona === "BLUE" ? "rgba(10, 203, 230, 0.2)" : "rgba(232, 64, 87, 0.2)") : "transparent"};
+  color: ${props => props.aktywny ? (props.strona === "BLUE" ? "#0acbe6" : "#e84057") : "#888"};
+  border-color: ${props => props.aktywny ? (props.strona === "BLUE" ? "#0acbe6" : "#e84057") : "#444"};
+  &:hover { color: white; border-color: #666; }
+`;
+
+const SiatkaWykluczen = styled.div` display: flex; flex-wrap: wrap; gap: 4px; max-height: 200px; overflow-y: auto; margin-bottom: 10px; `;
+const SlotWykluczen = styled.div` 
+  width: 40px; height: 40px; border: 1px solid #333; cursor: pointer; position: relative;
+  opacity: ${props => props.aktywny ? 1 : 0.4}; 
+  border-color: ${props => props.aktywny ? (props.strona === "BLUE" ? "#0acbe6" : "#e84057") : "#333"};
+  img { width: 100%; height: 100%; object-fit: cover; }
+  &:hover { opacity: 1; border-color: gold; }
+  ${props => props.aktywny && `&::after { content: "✖"; position: absolute; color: white; font-weight: bold; top: 0; right: 0; background: ${props.strona === "BLUE" ? "#0acbe6" : "#e84057"}; font-size: 10px; padding: 1px; }`}
+`;
+const PoleTekstoweWykluczen = styled.textarea`
+  width: 100%; height: 80px; background: #091428; border: 1px solid #555; color: #aaa; padding: 10px; font-family: monospace; font-size: 0.85rem; resize: vertical;
+  &:focus { border-color: #c8aa6e; outline: none; color: white; }
+`;
+
 // Ekran Draftu
 const KontenerDraftu = styled.div` width: 100%; max-width: 1600px; display: flex; flex-direction: column; gap: 20px; `;
 const GornaBelka = styled.div` display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; background: rgba(10, 20, 40, 0.8); border: 1px solid #444; border-radius: 8px; `;
@@ -68,15 +90,12 @@ const NazwaDruzyny = styled.div` font-size: 1.5rem; font-weight: bold; text-alig
 const SrodkowaKolumna = styled.div` flex: 1; display: flex; flex-direction: column; align-items: center; background: rgba(0,0,0,0.3); padding: 20px; border-radius: 10px; border: 1px solid #333; max-width: 900px; `;
 const InfoTura = styled.div` font-size: 1.8rem; font-weight: bold; margin-bottom: 20px; color: ${props => props.koniec ? "#00ff00" : (props.strona === "BLUE" ? "#0acbe6" : "#e84057")}; `;
 
-// Slot na postac (pick/ban)
 const RzadSlotu = styled.div` display: flex; align-items: center; gap: 15px; padding: 10px; background: rgba(255,255,255,0.03); border-radius: 6px; flex-direction: ${props => props.strona === "BLUE" ? "row" : "row-reverse"}; border-left: ${props => props.strona === "BLUE" ? "4px solid #0acbe6" : "none"}; border-right: ${props => props.strona === "RED" ? "4px solid #e84057" : "none"}; `;
 const ObrazekGlowny = styled.div` width: 64px; height: 64px; border: 2px solid #444; img { width: 100%; height: 100%; object-fit: cover; } `;
 
-// Siatka postaci do wyboru
 const SiatkaPostaci = styled.div` display: flex; flex-wrap: wrap; gap: 6px; width: 100%; padding: 10px; height: 500px; overflow-y: auto; justify-content: center; `;
 const PrzyciskPostaci = styled.button` width: 60px; height: 60px; border: 1px solid #444; background: #111; padding: 0; cursor: pointer; opacity: ${props => props.wylaczony ? 0.3 : 1}; img { width: 100%; height: 100%; object-fit: cover; } &:hover { transform: scale(1.1); z-index: 2; border-color: gold; } `;
 
-// Panel Analizy (Winrate + Rekomendacje)
 const PanelAnalizy = styled.div` margin-top: 20px; background: rgba(10,20,30,0.9); padding: 20px; border: 1px solid #333; width: 100%; border-radius: 8px; text-align: center; `;
 const PasekWinrate = styled.div` display: flex; height: 10px; width: 100%; background: #333; margin: 15px 0; border-radius: 5px; overflow: hidden; `;
 const SegmentPaska = styled.div` height: 100%; background: ${props => props.kolor}; width: ${props => props.procent}%; `;
@@ -90,11 +109,8 @@ const PrzyciskRekomendacji = styled.button`
 `;
 
 // --- LOGIKA ---
-
-// Adres do naszego backendu w Pythonie
 const API_URL = "http://localhost:8000";
 
-// Kolejnosc draftu (standardowa turniejowa)
 const SEKWENCJA_DRAFTU = [
   { type: "BAN", side: "BLUE" }, { type: "BAN", side: "RED" },
   { type: "BAN", side: "BLUE" }, { type: "BAN", side: "RED" },
@@ -108,17 +124,13 @@ const SEKWENCJA_DRAFTU = [
   { type: "PICK", side: "BLUE" }, { type: "PICK", side: "RED" },
 ];
 
-// Pomocnicza funkcja zeby naprawic nazwy z backendu (np. Wukong vs MonkeyKing)
 const naprawNazwePostaci = (idZBackendu) => {
     if (!idZBackendu) return null;
     const cleanId = String(idZBackendu).toLowerCase().replace(/[^a-z0-9]/g, "");
-    
-    // Szukamy w naszym pliku JSON
     const keys = Object.keys(championRoles);
     for (const k of keys) {
         const cleanJson = k.toLowerCase().replace(/[^a-z0-9]/g, "");
         if (cleanJson === cleanId) return k;
-        // Fixy na dziwne nazwy Riotu
         if (cleanId === "monkeyking" && cleanJson === "wukong") return k;
         if (cleanId === "wukong" && cleanJson === "monkeyking") return k;
         if (cleanId === "renataglasc" && cleanJson === "renata") return k;
@@ -126,36 +138,33 @@ const naprawNazwePostaci = (idZBackendu) => {
     return idZBackendu;
 };
 
-// --- GLOWNY KOMPONENT ---
 function App() {
-  // Stan aplikacji
-  const [faza, ustawFaze] = useState("SETUP"); // SETUP albo DRAFT
+  const [faza, ustawFaze] = useState("SETUP");
   const [konfig, ustawKonfig] = useState({ 
       tryb: "PvAI", 
       stronaGracza: "BLUE", 
       patch: "PRO-S15"
   });
   
+  // NOWE: Dwa osobne stany dla wykluczen
+  const [zakladka, ustawZakladke] = useState("BLUE"); // Ktora zakladka aktywna
+  const [wykluczeniaBlue, ustawWykluczeniaBlue] = useState([]);
+  const [wykluczeniaRed, ustawWykluczeniaRed] = useState([]);
+  
+  const [tekstBlue, ustawTekstBlue] = useState("");
+  const [tekstRed, ustawTekstRed] = useState("");
+
   const [dostepnePatche, ustawPatche] = useState(["PRO-S15"]);
-  
-  // Stan draftu - to co wysylamy do Pythona
-  const [stanDraftu, ustawStanDraftu] = useState({ 
-      blue_team: { picks: [], bans: [] }, 
-      red_team: { picks: [], bans: [] } 
-  });
-  
+  const [stanDraftu, ustawStanDraftu] = useState({ blue_team: { picks: [], bans: [] }, red_team: { picks: [], bans: [] } });
   const [numerTury, ustawNumerTury] = useState(0);
   const [wynikAnalizy, ustawWynikAnalizy] = useState(null);
   const [ladowanie, ustawLadowanie] = useState(false);
-  
-  // Filtrowanie postaci
   const [szukanaNazwa, ustawSzukanaNazwe] = useState("");
   const [szukanaRola, ustawSzukanaRole] = useState("");
 
   const czyKoniecDraftu = numerTury >= SEKWENCJA_DRAFTU.length;
   const obecnaTura = !czyKoniecDraftu ? SEKWENCJA_DRAFTU[numerTury] : null;
 
-  // Na start pobieramy patche z backendu
   useEffect(() => {
       axios.get(`${API_URL}/patches`)
         .then(res => {
@@ -167,6 +176,49 @@ function App() {
         .catch(err => console.log("Backend nie odpowiada:", err));
   }, []);
 
+  // --- LOGIKA WYKLUCZEŃ ---
+  const przelaczWykluczenie = (champId) => {
+    // Sprawdzamy na ktorej jestesmy zakladce
+    const lista = zakladka === "BLUE" ? wykluczeniaBlue : wykluczeniaRed;
+    const ustawListe = zakladka === "BLUE" ? ustawWykluczeniaBlue : ustawWykluczeniaRed;
+    const ustawTekst = zakladka === "BLUE" ? ustawTekstBlue : ustawTekstRed;
+
+    let nowaLista;
+    if (lista.includes(champId)) {
+        nowaLista = lista.filter(id => id !== champId);
+    } else {
+        nowaLista = [...lista, champId];
+    }
+    
+    ustawListe(nowaLista);
+    
+    // Generujemy tekst
+    const nazwy = nowaLista.map(id => {
+        const k = naprawNazwePostaci(id);
+        return championRoles[k]?.name || id;
+    });
+    ustawTekst(nazwy.join(", "));
+  };
+
+  const obsluzZmianeTekstu = (e) => {
+      const tekst = e.target.value;
+      const ustawTekst = zakladka === "BLUE" ? ustawTekstBlue : ustawTekstRed;
+      const ustawListe = zakladka === "BLUE" ? ustawWykluczeniaBlue : ustawWykluczeniaRed;
+
+      ustawTekst(tekst);
+
+      // Parsowanie tekstu na ID
+      const nazwy = tekst.split(",").map(s => s.trim().toLowerCase()).filter(s => s.length > 0);
+      const noweIdki = [];
+      const wszystkiePostacie = Object.values(championRoles);
+      
+      nazwy.forEach(n => {
+          const znaleziona = wszystkiePostacie.find(c => c.name.toLowerCase() === n || c.id.toLowerCase() === n);
+          if (znaleziona) noweIdki.push(znaleziona.id);
+      });
+      ustawListe(noweIdki);
+  };
+
   const rozpocznijDraft = () => {
     ustawFaze("DRAFT");
     ustawStanDraftu({ blue_team: { picks: [], bans: [] }, red_team: { picks: [], bans: [] } });
@@ -174,31 +226,23 @@ function App() {
     ustawWynikAnalizy(null);
   };
 
-  // Glowna petla logiczna - sprawdza czyja tura i pyta AI
   useEffect(() => {
     if (faza !== "DRAFT") return;
-    
-    // Jak koniec to robimy finalna analize
     if (czyKoniecDraftu) {
         if (!wynikAnalizy) zapytajAI(true);
         return;
     }
-
-    // Sprawdzamy czy teraz rusza sie AI czy Gracz
     let czyRuchAI = (konfig.tryb === "AIvAI") || (obecnaTura.side !== konfig.stronaGracza);
-    
     if (czyRuchAI && !ladowanie) {
-        zapytajAI(false); // AI gra samo
+        zapytajAI(false);
     } else if (!czyRuchAI && !ladowanie && !wynikAnalizy) {
-        zapytajAI(false, true); // Tylko podpowiedz dla gracza
+        zapytajAI(false, true);
     }
   }, [numerTury, faza, czyKoniecDraftu]); 
 
-  // Funkcja gadajaca z Pythonem
   const zapytajAI = async (czyFinal, czyTylkoPodpowiedz = false) => {
       ustawLadowanie(true);
       try {
-          // Male opoznienie zeby wygladalo ze mysli
           if (!czyFinal && !czyTylkoPodpowiedz) await new Promise(r => setTimeout(r, 800));
           
           const payload = {
@@ -206,15 +250,14 @@ function App() {
             red_team: stanDraftu.red_team,
             current_turn_side: czyFinal ? "NONE" : obecnaTura.side,
             target_patch: konfig.patch,
-            // Puste listy bo na razie nie robimy exkluzji
-            blue_exclusions: [], 
-            red_exclusions: []
+            // Teraz wysylamy DWA osobne zestawy wykluczen
+            blue_exclusions: wykluczeniaBlue,
+            red_exclusions: wykluczeniaRed
           };
           
           const res = await analyzeDraft(payload);
           ustawWynikAnalizy(res);
           
-          // Jesli to ruch AI, to automatycznie wybieramy to co polecil
           if (!czyFinal && !czyTylkoPodpowiedz) {
               const najlepszyWybor = res.recommended_picks?.[0];
               if (najlepszyWybor) {
@@ -223,39 +266,29 @@ function App() {
                  if (danePostaci) wybierzPostac(danePostaci);
               }
           }
-      } catch (error) { 
-          console.error("Blad AI:", error); 
-      } finally { 
-          ustawLadowanie(false); 
-      }
+      } catch (error) { console.error("Blad AI:", error); } finally { ustawLadowanie(false); }
   };
 
-  // Klikniecie w postac
   const wybierzPostac = (champ) => {
     if (!obecnaTura) return;
-    
     const { type, side } = obecnaTura;
     
     ustawStanDraftu(stare => {
       const nowe = JSON.parse(JSON.stringify(stare));
       const team = side === "BLUE" ? "blue_team" : "red_team";
       const pickObj = { id: champ.id, name: champ.name, lane: champ.lane || "Any" };
-      
       if (type === "BAN") {
-        // Nie banujemy 2 razy tego samego
         if (!nowe[team].bans.includes(champ.id)) nowe[team].bans.push(champ.id);
       } else { 
         nowe[team].picks.push(pickObj); 
       }
       return nowe;
     });
-
     ustawWynikAnalizy(null); 
     ustawNumerTury(prev => prev + 1);
-    ustawSzukanaNazwe(""); // Reset szukania po wyborze
+    ustawSzukanaNazwe("");
   };
 
-  // Lista postaci do renderowania (z filtrowaniem)
   const listaPostaci = useMemo(() => {
       return Object.values(championRoles).filter(c => {
           if (szukanaRola && c.lane !== szukanaRola) return false;
@@ -263,29 +296,33 @@ function App() {
       });
   }, [szukanaNazwa, szukanaRola]);
 
-  // Sprawdza czy postac juz zajeta
+  const listaPostaciDoWykluczen = useMemo(() => {
+      return Object.values(championRoles).sort((a,b) => a.name.localeCompare(b.name));
+  }, []);
+
   const czyZajeta = (id) => {
+      // Przy drafcie bierzemy pod uwage wykluczenia odpowiedniej druzyny (zaleznie kto wybiera)
+      // Ale dla uproszczenia widoku blokujemy wszystkie "uzyte" postacie
       const all = [
           ...stanDraftu.blue_team.bans, 
           ...stanDraftu.red_team.bans, 
           ...stanDraftu.blue_team.picks.map(p=>p.id), 
-          ...stanDraftu.red_team.picks.map(p=>p.id)
+          ...stanDraftu.red_team.picks.map(p=>p.id),
+          // Tutaj mozna dodac wykluczenia jesli chcemy zeby nie dalo sie ich kliknac
+          // ale w praktyce w drafcie wykluczenia dzialaja "po cichu" na logike AI
       ];
       return all.includes(id);
   };
 
-  // Renderowanie slotow (koleczka z postaciami)
   const renderPanelPicks = (druzyna) => {
       const picks = stanDraftu[druzyna].picks;
       const strona = druzyna === "blue_team" ? "BLUE" : "RED";
-      
       return (
           <>
             {Array.from({ length: 5 }).map((_, idx) => {
                 const pickData = picks[idx] || null;
                 const klucz = pickData ? naprawNazwePostaci(pickData.id) : null;
                 const info = klucz ? championRoles[klucz] : null;
-
                 return (
                     <RzadSlotu key={idx} strona={strona}>
                         <ObrazekGlowny style={{borderColor: strona === "BLUE" ? "#0acbe6" : "#e84057"}}>
@@ -307,37 +344,36 @@ function App() {
                   const info = championRoles[klucz];
                   return <div key={idx} style={{width: 32, height: 32, border: "1px solid #555"}}>{info && <img src={info.icon} style={{width:"100%"}} alt="" />}</div>
               })}
-              {/* Puste sloty na bany */}
               {Array.from({ length: 5 - bans.length }).map((_, i) => <div key={i} style={{width: 32, height: 32, border: "1px dashed #333"}}></div>)}
           </div>
       )
   }
 
-  // --- HTML (JSX) ---
   return (
     <>
       <GlobalStyle />
       <GlownyKontener czySetup={faza === "SETUP"}>
         
         {faza === "SETUP" ? (
-          // EKRAN STARTOWY
           <PudloStartowe>
               <Tytul>LoL Pro Draft</Tytul>
               
-              <GrupaFormularza>
-                  <Etykieta>Wybierz Patch</Etykieta>
-                  <WyborSelect value={konfig.patch} onChange={e => ustawKonfig({...konfig, patch: e.target.value})}>
-                      {dostepnePatche.map(p => <option key={p} value={p}>{p}</option>)}
-                  </WyborSelect>
-              </GrupaFormularza>
+              <div style={{display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20}}>
+                <GrupaFormularza>
+                    <Etykieta>Wybierz Patch</Etykieta>
+                    <WyborSelect value={konfig.patch} onChange={e => ustawKonfig({...konfig, patch: e.target.value})}>
+                        {dostepnePatche.map(p => <option key={p} value={p}>{p}</option>)}
+                    </WyborSelect>
+                </GrupaFormularza>
 
-              <GrupaFormularza>
-                  <Etykieta>Tryb Gry</Etykieta>
-                  <WyborSelect value={konfig.tryb} onChange={e => ustawKonfig({...konfig, tryb: e.target.value})}>
-                      <option value="PvAI">Człowiek vs AI</option>
-                      <option value="AIvAI">Symulacja (AI vs AI)</option>
-                  </WyborSelect>
-              </GrupaFormularza>
+                <GrupaFormularza>
+                    <Etykieta>Tryb Gry</Etykieta>
+                    <WyborSelect value={konfig.tryb} onChange={e => ustawKonfig({...konfig, tryb: e.target.value})}>
+                        <option value="PvAI">Człowiek vs AI</option>
+                        <option value="AIvAI">Symulacja (AI vs AI)</option>
+                    </WyborSelect>
+                </GrupaFormularza>
+              </div>
 
               {konfig.tryb === "PvAI" && (
                   <GrupaFormularza>
@@ -349,11 +385,60 @@ function App() {
                   </GrupaFormularza>
               )}
 
+              {/* --- ZMODYFIKOWANA SEKCJA WYKLUCZEŃ --- */}
+              <GrupaFormularza>
+                  <Etykieta>Zablokowane postacie (Player Pools)</Etykieta>
+                  
+                  {/* ZAKLADKI */}
+                  <KontenerZakladek>
+                      <PrzyciskZakladki aktywny={zakladka === "BLUE"} strona="BLUE" onClick={() => ustawZakladke("BLUE")}>
+                          Dla Blue Team
+                      </PrzyciskZakladki>
+                      <PrzyciskZakladki aktywny={zakladka === "RED"} strona="RED" onClick={() => ustawZakladke("RED")}>
+                          Dla Red Team
+                      </PrzyciskZakladki>
+                  </KontenerZakladek>
+
+                  <PanelWykluczen>
+                      <Szukajka placeholder="Filtruj listę ikon..." onChange={e => ustawSzukanaNazwe(e.target.value)} value={szukanaNazwa} style={{marginBottom: 5, padding: 8}}/>
+                      
+                      <SiatkaWykluczen>
+                          {listaPostaciDoWykluczen
+                              .filter(c => c.name.toLowerCase().includes(szukanaNazwa.toLowerCase()))
+                              .map(c => {
+                                  // Sprawdzamy czy aktywny na OBECNEJ zakladce
+                                  const aktywnaLista = zakladka === "BLUE" ? wykluczeniaBlue : wykluczeniaRed;
+                                  const czyZablokowany = aktywnaLista.includes(c.id);
+
+                                  return (
+                                      <SlotWykluczen 
+                                          key={c.id} 
+                                          aktywny={czyZablokowany}
+                                          strona={zakladka}
+                                          onClick={() => przelaczWykluczenie(c.id)}
+                                          title={c.name}
+                                      >
+                                          <img src={c.icon} alt={c.name} />
+                                      </SlotWykluczen>
+                                  )
+                          })}
+                      </SiatkaWykluczen>
+
+                      <Etykieta style={{fontSize: "0.8rem", color: "#888"}}>
+                          Lista tekstowa dla {zakladka} (kopiuj/wklej):
+                      </Etykieta>
+                      <PoleTekstoweWykluczen 
+                          value={zakladka === "BLUE" ? tekstBlue : tekstRed}
+                          onChange={obsluzZmianeTekstu}
+                          placeholder="Np. Aatrox, Ahri, Zed..."
+                      />
+                  </PanelWykluczen>
+              </GrupaFormularza>
+
               <PrzyciskStart onClick={rozpocznijDraft}>START</PrzyciskStart>
           </PudloStartowe>
 
         ) : (
-          // EKRAN DRAFTU
           <KontenerDraftu>
               <GornaBelka>
                   <h2 style={{margin:0, color: "#c8aa6e"}}>DRAFT {konfig.patch}</h2>
@@ -361,14 +446,12 @@ function App() {
               </GornaBelka>
 
               <SiatkaDraftu>
-                  {/* LEWA STRONA (BLUE) */}
                   <KolumnaDruzyny>
                       <NazwaDruzyny strona="BLUE">Niebiescy</NazwaDruzyny>
                       {renderPanelPicks("blue_team")}
                       {renderPanelBans("blue_team")}
                   </KolumnaDruzyny>
 
-                  {/* SRODEK (INFO + WYBOR) */}
                   <SrodkowaKolumna>
                       <InfoTura strona={obecnaTura?.side} koniec={czyKoniecDraftu}>
                           {czyKoniecDraftu ? "KONIEC DRAFTU" : `Tura: ${obecnaTura?.side} ${obecnaTura?.type}`}
@@ -379,11 +462,7 @@ function App() {
                             <BelkaFiltrow>
                                 <Szukajka placeholder="Szukaj postaci..." onChange={e => ustawSzukanaNazwe(e.target.value)} value={szukanaNazwa} style={{width: 200}} />
                                 {["", "TOP", "JG", "MID", "ADC", "SUP"].map(rola => (
-                                    <PrzyciskFiltra 
-                                        key={rola}
-                                        aktywny={szukanaRola === rola} 
-                                        onClick={() => ustawSzukanaRole(rola)}
-                                    >
+                                    <PrzyciskFiltra key={rola} aktywny={szukanaRola === rola} onClick={() => ustawSzukanaRole(rola)}>
                                         {rola || "ALL"}
                                     </PrzyciskFiltra>
                                 ))}
@@ -402,7 +481,6 @@ function App() {
                           </>
                       )}
 
-                      {/* WYNIKI ANALIZY OD AI */}
                       {wynikAnalizy && (
                           <PanelAnalizy>
                               <div style={{fontSize: "1.2rem", fontWeight: "bold", marginBottom: 5}}>
@@ -415,7 +493,6 @@ function App() {
                                   <SegmentPaska kolor="#e84057" procent={wynikAnalizy.red_win_probability} />
                               </PasekWinrate>
                               
-                              {/* Rekomendacja (Wyswietla tylko jesli draft trwa i jest ruch gracza) */}
                               {!czyKoniecDraftu && wynikAnalizy.recommended_picks?.[0] && (() => {
                                   const rec = wynikAnalizy.recommended_picks[0];
                                   const klucz = naprawNazwePostaci(rec.id);
@@ -442,7 +519,6 @@ function App() {
                       )}
                   </SrodkowaKolumna>
 
-                  {/* PRAWA STRONA (RED) */}
                   <KolumnaDruzyny>
                       <NazwaDruzyny strona="RED">Czerwoni</NazwaDruzyny>
                       {renderPanelPicks("red_team")}

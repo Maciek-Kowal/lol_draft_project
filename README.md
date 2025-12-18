@@ -48,4 +48,4 @@ Projekt realizuje pełny proces przetwarzania danych (ETL):
 4. Uruchom aplikację:
 	```bash
 	npm run dev
-	```"# lol_draft_project" 
+	```
